@@ -1,21 +1,15 @@
 const USERNAME = "xerot407";
 
-// Which section each repo belongs to (anything not listed goes to "learning")
+// Section order: security tools first, then apps, then learning projects
 const CATEGORY = {
-  "advanced-dork-gen": "security",
-  "port-scanning": "security",
-  "offlinepaswordstrengthchecker": "security",
-  "passwordstrengthchecker": "security",
-  "university-cafe-": "apps",
-  "personal-expense-tracker-": "apps"
+  "advanced-dork-gen": 0,
+  "port-scanning": 0,
+  "offlinepaswordstrengthchecker": 0,
+  "passwordstrengthchecker": 0,
+  "university-cafe-": 1,
+  "personal-expense-tracker-": 1
 };
 const FEATURED = "advanced-dork-gen";
-
-const GROUPS = [
-  { id: "security", title: "Security tools", note: "Scanners, generators and checkers for testing and defending." },
-  { id: "apps", title: "Apps and systems", note: "Complete programs that solve an everyday problem." },
-  { id: "learning", title: "Learning lab", note: "Practice projects and notes from along the way." }
-];
 
 // Used if GitHub can't be reached (offline or rate limited)
 const FALLBACK = [
@@ -32,13 +26,8 @@ const FALLBACK = [
   name, language, description, html_url: `https://github.com/${USERNAME}/${name}`
 }));
 
-const root = document.getElementById("repo-groups");
-const count = document.getElementById("repo-count");
-const filters = document.getElementById("filters");
-let repos = [];
-let active = "all";
-
-const catOf = repo => CATEGORY[repo.name.toLowerCase()] || "learning";
+const grid = document.getElementById("repo-grid");
+const key = repo => repo.name.toLowerCase();
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -47,59 +36,36 @@ function el(tag, className, text) {
   return node;
 }
 
-function chip(repo, index) {
-  const card = el("article", "chip");
-  card.style.setProperty("--i", index);
-  if (repo.name.toLowerCase() === FEATURED) card.classList.add("featured");
+function card(repo) {
+  const item = el("article", "card");
+  if (key(repo) === FEATURED) item.classList.add("featured");
 
-  card.append(el("span", "notch"));
-  if (repo.language) card.append(el("span", "lang", repo.language));
+  if (repo.language) item.append(el("span", "lang", repo.language));
 
   const link = el("a", "name", repo.name);
   link.href = repo.html_url;
   link.target = "_blank";
   link.rel = "noopener";
-  card.append(link);
+  item.append(link);
 
-  card.append(el("p", "", repo.description || "No description yet."));
+  item.append(el("p", "", repo.description || "No description yet."));
 
   if (repo.pushed_at) {
     const date = new Date(repo.pushed_at).toLocaleDateString("en", { month: "short", year: "numeric" });
-    card.append(el("span", "meta", `Updated ${date}`));
+    item.append(el("span", "meta", `Updated ${date}`));
   }
-  return card;
+  return item;
 }
 
-function render() {
-  root.replaceChildren();
-  GROUPS.filter(g => active === "all" || g.id === active).forEach(group => {
-    const items = repos.filter(r => catOf(r) === group.id);
-    if (!items.length) return;
-
-    // Featured project goes first in its section
-    items.sort((a, b) => (b.name.toLowerCase() === FEATURED) - (a.name.toLowerCase() === FEATURED));
-
-    const section = el("div", "group");
-    const head = el("div", "group-head");
-    head.append(el("h3", "", group.title), el("span", "count", items.length === 1 ? "1 project" : `${items.length} projects`));
-    section.append(head, el("p", "group-note", group.note));
-
-    const grid = el("div", "chips");
-    items.forEach((r, i) => grid.append(chip(r, i)));
-    section.append(grid);
-    root.append(section);
-  });
+function render(repos) {
+  const rank = r => (key(r) === FEATURED ? -1 : (CATEGORY[key(r)] ?? 2));
+  const sorted = [...repos].sort((a, b) => rank(a) - rank(b)); // stable, keeps newest-first inside each rank
+  grid.replaceChildren(...sorted.map(card));
+  document.getElementById("plate-repos").textContent = repos.length;
 }
-
-filters.addEventListener("click", e => {
-  const btn = e.target.closest("button");
-  if (!btn) return;
-  active = btn.dataset.filter;
-  filters.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
-  render();
-});
 
 async function load() {
+  let repos;
   try {
     const res = await fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=pushed`);
     if (!res.ok) throw new Error(res.status);
@@ -107,8 +73,7 @@ async function load() {
   } catch (err) {
     repos = FALLBACK;
   }
-  count.textContent = `${repos.length} projects on GitHub, newest first.`;
-  render();
+  render(repos);
 }
 
 load();

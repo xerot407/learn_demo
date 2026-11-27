@@ -1,109 +1,93 @@
 :root{
-  --board:#0f2a24;      /* solder mask */
-  --board-2:#143530;    /* raised surface */
-  --trace:#2f6b57;      /* faint copper under mask */
-  --silk:#e9efe5;       /* silkscreen white */
-  --muted:#a9bdb3;
-  --copper:#d08a3c;     /* exposed copper */
-  --gold:#ecc96f;
-  --radius:6px;
-  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --body:"Instrument Sans","Segoe UI",system-ui,sans-serif;
+  --ink:#0e1b2c;
+  --yellow:#ffd400;
+  --paper:#f3f5f7;
+  --white:#fff;
+  --muted:#4d5a6b;
+  --line:#c9d1da;
+  --focus:#2457ff;
+  --display:"Archivo","Arial Black","Segoe UI",system-ui,sans-serif;
+  --body:"Public Sans","Segoe UI",system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--board);color:var(--silk);font:400 1.0625rem/1.65 var(--body)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--body)}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.dark :focus-visible,footer :focus-visible{outline-color:var(--yellow)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.5rem}
 
-.nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;padding:1.25rem 1.5rem}
-.brand{font:800 1.25rem var(--display);text-decoration:none;color:var(--gold)}
-.nav nav{display:flex;gap:1.5rem}
-.nav nav a{text-decoration:none;color:var(--muted)}
-.nav nav a:hover{color:var(--silk)}
+/* Top: yellow hero ending in a hazard stripe */
+.top{background:var(--yellow)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-top:1.25rem;padding-bottom:1.25rem}
+.brand{font:900 1.3rem var(--display);font-stretch:112%;text-decoration:none}
+.nav nav{display:flex;gap:1.6rem}
+.nav nav a{text-decoration:none;font-weight:500}
+.nav nav a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
 
-main{max-width:1100px;margin:0 auto;padding:0 1.5rem}
-
-.hero{position:relative;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:2rem;min-height:78vh;padding:2rem 0 4rem}
-.hero-text{position:relative;z-index:1}
-h1{font:800 clamp(2.8rem,7vw,5.4rem)/1 var(--display);letter-spacing:-.03em;margin:0 0 1.5rem}
-.lead{max-width:34rem;color:var(--muted);font-size:1.2rem;margin:0 0 2rem}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:3rem;align-items:center;padding-top:3rem;padding-bottom:5rem}
+h1{font:900 clamp(2.4rem,5.4vw,4.5rem)/1 var(--display);font-stretch:112%;letter-spacing:-.02em;margin:0 0 1.5rem}
+.lead{max-width:34rem;font-size:1.2rem;margin:0 0 2rem}
 
 .actions{display:flex;flex-wrap:wrap;gap:.9rem}
-.btn{display:inline-block;padding:.8rem 1.35rem;border:2px solid var(--copper);border-radius:var(--radius);text-decoration:none;font-weight:500;transition:background .15s,color .15s}
-.btn:hover{background:var(--copper);color:var(--board)}
-.btn.primary{background:var(--copper);color:var(--board)}
-.btn.primary:hover{background:var(--gold);border-color:var(--gold)}
+.btn{display:inline-block;padding:.8rem 1.4rem;border:2px solid var(--ink);border-radius:4px;text-decoration:none;font-weight:500;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+.btn.primary{background:var(--ink);color:var(--yellow)}
+.yellow .btn.primary:hover{box-shadow:4px 4px 0 var(--white)}
 
-/* PCB traces: the one memorable moment */
-.traces{width:100%;height:auto}
-.trace-lines path{stroke:var(--trace);stroke-width:5;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s ease-out .2s forwards}
-.trace-lines path:nth-child(2){animation-delay:.45s}
-.trace-lines path:nth-child(3){animation-delay:.7s}
-.trace-lines path:nth-child(4){animation-delay:.95s}
-.trace-lines path:nth-child(5){animation-delay:1.2s}
-.pads circle{fill:var(--copper);stroke:var(--gold);stroke-width:2;opacity:0;animation:pad .4s ease-out 2s forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes pad{to{opacity:1}}
+/* Rating plate, like the label on a piece of equipment */
+.plate{position:relative;margin:0;padding:1.6rem 1.7rem;background:var(--ink);color:var(--white);border-radius:6px;
+  background-image:radial-gradient(circle,#3b4d66 4px,transparent 5px),radial-gradient(circle,#3b4d66 4px,transparent 5px),radial-gradient(circle,#3b4d66 4px,transparent 5px),radial-gradient(circle,#3b4d66 4px,transparent 5px);
+  background-size:12px 12px;background-repeat:no-repeat;
+  background-position:left 8px top 8px,right 8px top 8px,left 8px bottom 8px,right 8px bottom 8px}
+.plate div{display:grid;grid-template-columns:7.5rem 1fr;gap:.8rem;padding:.7rem 0;border-bottom:1px solid #2b3d55}
+.plate div:last-child{border-bottom:0}
+.plate dt{color:var(--yellow);font-weight:500}
+.plate dd{margin:0}
 
-.block{padding:4rem 0;border-top:2px dashed var(--trace)}
-h2{font:800 clamp(1.9rem,4vw,2.6rem)/1.1 var(--display);margin:0 0 .5rem;letter-spacing:-.02em}
-h3{font:500 1.25rem var(--display);margin:0 0 .4rem;color:var(--gold)}
-.sub{color:var(--muted);margin:0 0 2rem}
+/* The one memorable moment: the stripe draws in once on load */
+.stripe{height:24px;background:repeating-linear-gradient(-45deg,var(--ink) 0 18px,var(--yellow) 18px 36px);animation:reveal 1.2s cubic-bezier(.7,0,.2,1) .2s both}
+@keyframes reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 
+.block{padding:5rem 0}
+.dark{background:var(--ink);color:var(--white)}
+.yellow{background:var(--yellow)}
+h2{font:900 clamp(1.9rem,4vw,2.8rem)/1.05 var(--display);font-stretch:112%;letter-spacing:-.02em;margin:0 0 2rem}
+h3{font:800 1.25rem var(--display);font-stretch:108%;margin:0 0 .5rem}
+.sub{margin:-1rem 0 2rem}
 
-
-/* Project filters */
-.filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem}
-.filters button{font:500 1rem var(--body);color:var(--silk);background:none;border:2px solid var(--trace);border-radius:99px;padding:.4rem 1.1rem;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
-.filters button:hover{border-color:var(--copper)}
-.filters button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--board)}
-
-/* Project groups */
-.group{margin-bottom:3rem}
-.group-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:.3rem}
-.group-head h3{font-size:1.6rem;margin:0}
-.group-head .count{color:var(--muted);font-size:.95rem}
-.group-head::after{content:"";flex:1;height:5px;border-radius:3px;background:var(--trace);align-self:center;order:3}
-.group-note{margin:0 0 1.8rem;color:var(--muted)}
-
-.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.6rem 2.2rem}
-
-/* Each project is an IC chip: body, pins on both sides, pin-1 notch */
-.chip{position:relative;display:flex;flex-direction:column;gap:.6rem;min-height:190px;margin:0 16px;padding:1.2rem 1.3rem 1rem;background:#0a1c18;border:2px solid var(--trace);border-radius:var(--radius);transition:transform .2s,border-color .2s,box-shadow .2s;animation:chip-in .45s ease-out both;animation-delay:calc(var(--i,0)*60ms)}
-.chip::before,.chip::after{content:"";position:absolute;top:14px;bottom:14px;width:16px;background:repeating-linear-gradient(to bottom,var(--trace) 0 9px,transparent 9px 21px);transition:background .2s}
-.chip::before{left:-16px}
-.chip::after{right:-16px}
-.chip:hover,.chip:focus-within{transform:translateY(-5px);border-color:var(--copper);box-shadow:0 10px 0 -4px rgba(208,138,60,.18)}
-.chip:hover::before,.chip:hover::after,.chip:focus-within::before,.chip:focus-within::after{background:repeating-linear-gradient(to bottom,var(--copper) 0 9px,transparent 9px 21px)}
-.notch{position:absolute;top:8px;right:10px;width:11px;height:11px;border-radius:50%;border:2px solid var(--trace);transition:background .2s,border-color .2s}
-.chip:hover .notch{background:var(--gold);border-color:var(--gold)}
-.chip .lang{align-self:flex-start;padding:.1rem .65rem;border:1.5px solid var(--copper);border-radius:99px;color:var(--gold);font-size:.85rem}
-.chip .name{font:800 1.3rem/1.2 var(--display);text-decoration:none;overflow-wrap:anywhere;letter-spacing:-.01em}
-.chip .name::after{content:"";position:absolute;inset:0}
-.chip p{margin:0;color:var(--muted);font-size:.98rem;line-height:1.5;flex:1}
-.chip .meta{color:var(--muted);font-size:.85rem;opacity:.8}
-.chip.featured{grid-column:span 2;min-height:210px;background:linear-gradient(135deg,#0a1c18 55%,#16382f)}
-.chip.featured .name{font-size:1.9rem}
-.chip.featured p{font-size:1.05rem}
+/* Projects */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
 .loading{color:var(--muted)}
-@keyframes chip-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.card{position:relative;display:flex;flex-direction:column;gap:.7rem;min-height:185px;padding:1.3rem;background:var(--white);border:2px solid var(--ink);border-radius:6px;transition:transform .15s,box-shadow .15s}
+.card:hover,.card:focus-within{transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--ink)}
+.card .lang{align-self:flex-start;padding:.1rem .65rem;background:var(--yellow);border-radius:3px;font-size:.85rem;font-weight:500}
+.card .name{font:800 1.3rem/1.2 var(--display);font-stretch:108%;text-decoration:none;overflow-wrap:anywhere}
+.card .name::after{content:"";position:absolute;inset:0}
+.card p{margin:0;color:var(--muted);font-size:.98rem;line-height:1.5;flex:1}
+.card .meta{color:var(--muted);font-size:.85rem}
+.card.featured{grid-column:span 2;background:var(--yellow)}
+.card.featured .lang{background:var(--ink);color:var(--yellow)}
+.card.featured .name{font-size:1.9rem}
+.card.featured p,.card.featured .meta{color:var(--ink)}
 
+/* Skills */
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2.5rem}
-.skills p{margin:0;color:var(--muted)}
+.skills>div{border-top:4px solid var(--yellow);padding-top:1rem}
+.skills h3{color:var(--yellow)}
+.skills p{margin:0;color:#c4cfdc}
 
-footer{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 3rem;color:var(--muted);border-top:2px dashed var(--trace)}
+footer{padding:2rem 1.5rem 3rem;background:var(--ink);color:#9fb0c4;text-align:center;border-top:1px solid #22344c}
 
 @media (max-width:800px){
-  .hero{grid-template-columns:1fr;min-height:auto}
-  .traces{position:absolute;inset:0;height:100%;opacity:.35;z-index:0}
+  .hero{grid-template-columns:1fr;gap:2.5rem;padding-bottom:3.5rem}
+  .card.featured{grid-column:span 1}
+  .card.featured .name{font-size:1.5rem}
   .nav nav{gap:1rem}
-  .chip.featured{grid-column:span 1}
-  .chip.featured .name{font-size:1.5rem}
+  .block{padding:3.5rem 0}
 }
 @media (prefers-reduced-motion:reduce){
-  .trace-lines path{animation:none;stroke-dashoffset:0}
-  .pads circle{animation:none;opacity:1}
+  .stripe{animation:none}
+  .btn,.card{transition:none}
   html{scroll-behavior:auto}
-  .chip{animation:none}
 }

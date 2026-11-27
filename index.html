@@ -7,23 +7,23 @@
   <meta name="description" content="Cybersecurity and electronics student building CTF skills and breaking things ethically.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..900&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="nav">
-    <a class="brand" href="#top">xerot407</a>
-    <nav>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <div class="top">
+    <header class="nav wrap">
+      <a class="brand" href="#top">xerot407</a>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-  <main id="top">
-    <section class="hero">
+    <section class="hero wrap" id="top">
       <div class="hero-text">
-        <h1>Muhammad<br>breaks things<br>ethically.</h1>
+        <h1>Muhammad Musa breaks things ethically.</h1>
         <p class="lead">Cybersecurity and electronics student in Pakistan. I practise penetration testing and network defense, and I build CTF skills one challenge at a time.</p>
         <div class="actions">
           <a class="btn primary" href="#projects">See my projects</a>
@@ -31,59 +31,53 @@
         </div>
       </div>
 
-      <svg class="traces" viewBox="0 0 600 480" aria-hidden="true" focusable="false">
-        <g class="trace-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path pathLength="1" d="M0 70 H150 L210 130 H410 L470 70 H600"/>
-          <path pathLength="1" d="M0 190 H110 L170 250 H350 L410 310 H600"/>
-          <path pathLength="1" d="M0 320 H190 L250 380 H450 L510 440 H600"/>
-          <path pathLength="1" d="M90 0 V110 L130 150 V250"/>
-          <path pathLength="1" d="M520 0 V60 M520 130 V220 L480 260 V480"/>
-        </g>
-        <g class="pads">
-          <circle cx="210" cy="130" r="7"/><circle cx="410" cy="130" r="7"/>
-          <circle cx="170" cy="250" r="7"/><circle cx="350" cy="250" r="7"/>
-          <circle cx="250" cy="380" r="7"/><circle cx="450" cy="380" r="7"/>
-          <circle cx="130" cy="250" r="7"/><circle cx="480" cy="260" r="7"/>
-        </g>
-      </svg>
+      <dl class="plate">
+        <div><dt>Name</dt><dd>Muhammad</dd></div>
+        <div><dt>Location</dt><dd>Pakistan</dd></div>
+        <div><dt>Studying</dt><dd>Cybersecurity and electronics</dd></div>
+        <div><dt>Focus</dt><dd>Penetration testing, network defense</dd></div>
+        <div><dt>Public repos</dt><dd id="plate-repos">9</dd></div>
+      </dl>
     </section>
+    <div class="stripe" aria-hidden="true"></div>
+  </div>
 
+  <main>
     <section id="projects" class="block">
-      <h2>Projects</h2>
-      <p class="sub" id="repo-count">Pulled live from GitHub, newest first.</p>
-      <div class="filters" id="filters">
-        <button type="button" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" data-filter="security" aria-pressed="false">Security tools</button>
-        <button type="button" data-filter="apps" aria-pressed="false">Apps and systems</button>
-        <button type="button" data-filter="learning" aria-pressed="false">Learning lab</button>
+      <div class="wrap">
+        <h2>Projects</h2>
+        <div id="repo-grid" class="grid"><p class="loading">Loading projects…</p></div>
       </div>
-      <div id="repo-groups"><p class="loading">Loading projects…</p></div>
     </section>
 
-    <section id="skills" class="block">
-      <h2>What I work with</h2>
-      <div class="skills">
-        <div>
-          <h3>Security</h3>
-          <p>Penetration testing, network defense, port scanning, capture-the-flag challenges, password security.</p>
-        </div>
-        <div>
-          <h3>Electronics</h3>
-          <p>Circuits and hardware fundamentals from my electronics studies, which shape how I think about attack surfaces.</p>
-        </div>
-        <div>
-          <h3>Code</h3>
-          <p>Python, JavaScript, TypeScript, PowerShell, HTML and CSS.</p>
+    <section id="skills" class="block dark">
+      <div class="wrap">
+        <h2>What I work with</h2>
+        <div class="skills">
+          <div>
+            <h3>Security</h3>
+            <p>Penetration testing, network defense, port scanning, capture-the-flag challenges, password security.</p>
+          </div>
+          <div>
+            <h3>Electronics</h3>
+            <p>Circuits and hardware fundamentals from my electronics studies, which shape how I think about attack surfaces.</p>
+          </div>
+          <div>
+            <h3>Code</h3>
+            <p>Python, JavaScript, TypeScript, PowerShell, HTML and CSS.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="block">
-      <h2>Get in touch</h2>
-      <p class="sub">The fastest way to reach me is through GitHub.</p>
-      <div class="actions">
-        <a class="btn primary" href="https://github.com/xerot407" target="_blank" rel="noopener">Message me on GitHub</a>
-        <!-- Add your own: <a class="btn" href="mailto:you@example.com">Send an email</a> -->
+    <section id="contact" class="block yellow">
+      <div class="wrap">
+        <h2>Get in touch</h2>
+        <p class="sub">The fastest way to reach me is through GitHub.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/xerot407" target="_blank" rel="noopener">Message me on GitHub</a>
+          <!-- Add your own: <a class="btn" href="mailto:you@example.com">Send an email</a> -->
+        </div>
       </div>
     </section>
   </main>
